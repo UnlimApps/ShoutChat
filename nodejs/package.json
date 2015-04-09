@@ -1,0 +1,15 @@
+{
+  "name": "ShoutChatBackend",
+  "description": "A application that allow users to chat with users in their area. The louder they chat, the more people hear them!",
+  "author": "Sandeep Dinesh <sandeepdinesh@google.com>",
+  "dependencies": {
+    "express": "4.12.x",
+	"socket.io": "1.3.x",
+	"express-session": "1.11.x",
+	"express-socket.io-session": "1.2.x",
+	"redis": "0.12.x",
+	"connect-redis": "2.2.x",
+	"googleapis": "2.0.x"
+  },
+  "engine": "node >= 0.12.1"
+}

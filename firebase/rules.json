@@ -1,0 +1,17 @@
+{
+    "rules": {
+        "messages": {
+            "$uid": {
+                ".validate": "newData.child('lat').isNumber() && newData.child('lat').val() >= -90 && newData.child('lat').val() <= 90 && newData.child('lng').isNumber() && newData.child('lng').val() >= -180 && newData.child('lng').val() <= 180 && newData.child('radius').isNumber() && newData.child('radius').val() >= 2e2 && newData.child('radius').val() <= 2e7 && newData.child('message').isString() && newData.child('message').val().length < 140 && newData.child('uid').val() == auth.uid",
+                ".write": true
+            },
+            ".read": true
+        },
+        "users": {
+            "$user": {
+                ".write": "$user == auth.uid"
+            },
+            ".read": true
+        }
+    }
+}
