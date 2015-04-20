@@ -14,7 +14,7 @@ It is highly recommend you run your app on a dedicated server, such as a Google 
 
 	1) Install Node.js https://nodejs.org/
 	2) Install Redis http://redis.io/
-	3) Run `npm install .` in the nodjs folder to install the required modules
+	3) Run `npm install .` in the nodejs folder to install the required modules
 	4) Once you enable Google Auth (see below), paste in your Client ID and Client Secret into the appropriate places in node_app.js
 	5) Make sure your Redis server is running using `redis-cli ping` (see: http://redis.io/topics/quickstart)
 	6) Note: The app will run on port 3000. If you want to run the app on the standard port 80, stackoverflow.com has some great solutions. Please do NOT run node as root or admin!
@@ -30,11 +30,11 @@ Example:
 
 	Authorized JavaScript origins
 	https://auth.firebase.com <- Firebase
-	http://localhost:3000 <- Nodejs running on your local machine (for testing)
+	http://localhost:3000 <- Node.js running on your local machine (for testing)
 	
 	Authorized redirect URIs
 	https://auth.firebase.com/v2/{Your App}/auth/google/callback <- Firebase
-	http://localhost:3000/auth/google/callback <- Nodejs running on your local machine (for testing)
+	http://localhost:3000/auth/google/callback <- Node.js running on your local machine (for testing)
 
 Notes:
 This is not an official Google product.

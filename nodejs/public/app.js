@@ -152,30 +152,8 @@ function initialize(connection) {
 
 	google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
 
-		//Fix the Google Maps reflow on initial resize
-		setTimeout(function() {
-			google.maps.event.trigger(map, "resize");
-			setPosition();
-		}, 3000);
-
-		$('body').layout({
-			applyDefaultStyles: true,
-			onresize: function() {
-				google.maps.event.trigger(map, "resize");
-				setPosition();
-			},
-			west: {
-				size: $(window).width() / 2,
-				spacing_open: 25,
-				spacing_closed: 25,
-			},
-			south: {
-				size: 80,
-				resizable: false,
-				togglerLength_open: 0,
-				slideable: false,
-			},
-		});
+		google.maps.event.trigger(map, "resize");
+		setPosition();
 
 		//http://stackoverflow.com/questions/846221/logarithmic-slider
 
@@ -259,6 +237,8 @@ function initialize(connection) {
 					});
 
 					$("#text").append(line);
+
+					$("#chat-panel").scrollTop($("#chat-panel")[0].scrollHeight);
 				}
 			},
 			divs: {
