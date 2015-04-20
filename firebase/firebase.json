@@ -1,5 +1,5 @@
 {
-  "firebase": "shoutchat",
+  "firebase": "YOUR APP NAME HERE",
   "public": ".",
   "ignore": [
     "firebase.json",

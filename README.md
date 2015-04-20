@@ -6,7 +6,7 @@ Firebase Prerequisites:
 	2) Create a new Firebase App (mine is shoutchat.firbaseio.com)
 	3) You can host everything you need here, no need for a dedicated server!
 	4) Use https://www.firebase.com/docs/hosting/guide/deploying.html to deploy!
-	5) Note: In the firebase.json file, change "shoutchat" to the name of your firebase app
+	5) Note: In the firebase.json file, change "YOUR APP NAME HERE" to the name of your firebase app. In the node_app.js file, change "YOUR APP NAME HERE" to the name of your firebase app.
 
 Node.js Prerequisites:
 

@@ -18,7 +18,10 @@ var FirebaseConnection = {
 	//Data is a object that contains a function to display new messages (displayNewMessages) and a object with two divs:
 	//one to show after auth, and one to hide after auth
 	init: function(data) {
-		this.ref = new Firebase("https://shoutchat.firebaseio.com/");
+		
+		var firebase_app_name = "YOUR APP NAME HERE";
+		
+		this.ref = new Firebase("https://"+firebase_app_name+".firebaseio.com/");
 
 		//Function to call when the user logs in
 		data.divs.hidediv.show();
