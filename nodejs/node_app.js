@@ -55,7 +55,7 @@ io.use(sharedsession(ShoutChatSession));
 
 //Callback function after the Google Auth is done
 app.get('/auth/google/callback', function(req, res) {
-	if (req.query.code){
+	if (req.query.code) {
 		oauth2Client.getToken(req.query.code, function(err, tokens) {
 			if (err) {
 				console.log("Auth Error - " + err);
@@ -86,36 +86,40 @@ app.get('/auth/google/callback', function(req, res) {
 io.on('connection', function(socket) {
 
 	//If user has a valid session, then tell them they are allowed to send messages
-	if (socket.handshake.session.sender) {
-		socket.emit('auth_set');
+	if (socket.handshake.session) {
+		if (socket.handshake.session.sender) {
+			socket.emit('auth_set');
+		}
 	}
-	
+
 	//Enable the Google Auth button click
 	//A different way to do this may be to use a template and inject the url into the template
 	//However, I want to keep both implementations the same
 	socket.on('get_google_auth', function(msg) {
 		socket.emit('google_auth', url);
 	});
-	
+
 	//Get the last 1000 messages and send them to the client
 	redis.lrange('messages', 0, 1000, function(error, msgs) {
 		msgs.forEach(function(msg) {
 			socket.emit('child_added', JSON.parse(msg));
 		});
 	});
-	
+
 	//If the client sends us a new message, process it
 	socket.on('new_message', function(msg) {
 		//Make sure the client has a valid session
-		if (socket.handshake.session.sender) {
-			//Update the sender name using our session variable
-			msg.sender = socket.handshake.session.sender;
-			//Push the message to everyone else
-			io.sockets.emit('child_added', msg);
-			//Add the message to Redis
-			redis.rpush('messages', JSON.stringify(msg));
-			//Trim Redis so we only store the last 1000 messages (optional)
-			redis.ltrim('messages', 0, 1000);
+		if (socket.handshake.session) {
+			if (socket.handshake.session.sender) {
+				//Update the sender name using our session variable
+				msg.sender = socket.handshake.session.sender;
+				//Push the message to everyone else
+				io.sockets.emit('child_added', msg);
+				//Add the message to Redis
+				redis.rpush('messages', JSON.stringify(msg));
+				//Trim Redis so we only store the last 1000 messages (optional)
+				redis.ltrim('messages', 0, 1000);
+			}
 		} else {
 			//If the session is invalid, decline the message
 			socket.emit('child_added', {

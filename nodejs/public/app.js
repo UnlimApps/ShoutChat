@@ -20,24 +20,25 @@ var SocketConnection = {
 	init: function(data) {
 		this.socket = io();
 		data.divs.hidediv.show();
-		
+
 		//Function to call when the user is logged in
-		this.socket.on("auth_set", function(){
+		this.socket.on("auth_set", function() {
 			data.divs.showdiv.show();
 			data.divs.hidediv.hide();
 		});
 
 		//listen for new messages and display them
 		this.socket.on("child_added", function(snapshot) {
+			snapshot.id = Date.now();
 			data.displayNewMessage(snapshot);
 		});
 
 	},
 	sendMessage: function(data) {
-		this.socket.emit("new_message",data);
+		this.socket.emit("new_message", data);
 	},
 	googleAuth: function() {
-		this.socket.on("google_auth", function(msg){
+		this.socket.on("google_auth", function(msg) {
 			location.href = msg;
 		});
 		this.socket.emit("get_google_auth");
@@ -216,7 +217,7 @@ function initialize(connection) {
 
 					//Make sure we prevent potential XSS
 					var line = $('<li>'),
-						username = $('<b>').text(message.sender + ": "),
+						username = $('<b id=' + message.id + '>').text(message.sender + ": "),
 						messagetext = $('<span>').text(message.message),
 						loc = $('<small>').text(" - " + message.location).addClass("text-muted"),
 						prevZoom = map.getZoom();
@@ -248,6 +249,12 @@ function initialize(connection) {
 		});
 
 		//Send a new message when we click send
+
+		$("#message").keypress(function(e) {
+			if (e.which == 13) {
+				$("#send").click()
+			}
+		});
 
 		$("#send").click(function() {
 			connection.sendMessage({

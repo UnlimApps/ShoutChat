@@ -18,10 +18,10 @@ var FirebaseConnection = {
 	//Data is a object that contains a function to display new messages (displayNewMessages) and a object with two divs:
 	//one to show after auth, and one to hide after auth
 	init: function(data) {
-		
+
 		var firebase_app_name = "YOUR APP NAME HERE";
-		
-		this.ref = new Firebase("https://"+firebase_app_name+".firebaseio.com/");
+
+		this.ref = new Firebase("https://" + firebase_app_name + ".firebaseio.com/");
 
 		//Function to call when the user logs in
 		data.divs.hidediv.show();
@@ -40,11 +40,12 @@ var FirebaseConnection = {
 		//listen for new messages and display them
 		this.ref.child("messages").limitToLast(1000).on("child_added", function(snapshot) {
 			var msg = snapshot.val();
+			msg.id = snapshot.key();
+			msg.sender = "";
+			data.displayNewMessage(msg);
 			that.ref.child("users").child(msg.uid).child("name").once("value", function(snapshot) {
-				msg.sender = snapshot.val()
-				data.displayNewMessage(msg);
+				$("#" + msg.id).text(snapshot.val() + ": ");
 			});
-
 		});
 
 	},
@@ -241,7 +242,7 @@ function initialize(connection) {
 
 					//Make sure we prevent potential XSS
 					var line = $('<li>'),
-						username = $('<b>').text(message.sender + ": "),
+						username = $('<b id=' + message.id + '>').text(message.sender + ": "),
 						messagetext = $('<span>').text(message.message),
 						loc = $('<small>').text(" - " + message.location).addClass("text-muted"),
 						prevZoom = map.getZoom();
@@ -273,6 +274,12 @@ function initialize(connection) {
 		});
 
 		//Send a new message when we click send
+
+		$("#message").keypress(function(e) {
+			if (e.which == 13) {
+				$("#send").click()
+			}
+		});
 
 		$("#send").click(function() {
 			connection.sendMessage({
