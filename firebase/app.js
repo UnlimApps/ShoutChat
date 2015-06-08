@@ -29,7 +29,7 @@ var FirebaseConnection = {
 		this.ref.onAuth(function(authData) {
 			if (authData) {
 				that.ref.child("users").child(authData.uid).set({
-					name: that.getName(authData)
+					name: authData[authData.provider].displayName
 				});
 				that.uid = authData.uid;
 				data.divs.showdiv.show();
@@ -59,13 +59,6 @@ var FirebaseConnection = {
 				console.log("Login Failed!", error);
 			}
 		});
-	},
-	getName: function(authData) {
-		if (authData.google) {
-			return authData.google.displayName;
-		} else if (authData.facebook) {
-			return authData.facebook.displayName;
-		}
 	}
 }
 
