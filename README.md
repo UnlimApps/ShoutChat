@@ -17,7 +17,12 @@ It is highly recommend you run your app on a dedicated server, such as a Google 
 	3) Run `npm install .` in the nodejs folder to install the required modules
 	4) Once you enable Google Auth (see below), paste in your Client ID and Client Secret into the appropriate places in node_app.js
 	5) Make sure your Redis server is running using `redis-cli ping` (see: http://redis.io/topics/quickstart)
-	6) Note: The app will run on port 3000. If you want to run the app on the standard port 80, stackoverflow.com has some great solutions. Please do NOT run node as root or admin!
+	6) Note: The app will run on port 3000. 
+		If you want to run the app on the standard port 80, stackoverflow.com has some great solutions. 
+		Please do NOT run node as root or admin!
+		If your system uses iptables, I reccomend using iptables to map port 80 to port 3000. 
+		Use the following command: 
+			sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 
 You need to enable Google Auth for your users to log in:
 
