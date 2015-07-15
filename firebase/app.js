@@ -24,7 +24,7 @@ var FirebaseConnection = {
 		this.ref = new Firebase("https://" + firebase_app_name + ".firebaseio.com/");
 
 		//Function to call when the user logs in
-		data.divs.hidediv.show();
+		data.divs.beforeLogin.show();
 		var that = this;
 		this.ref.onAuth(function(authData) {
 			if (authData) {
@@ -32,8 +32,8 @@ var FirebaseConnection = {
 					name: authData[authData.provider].displayName
 				});
 				that.uid = authData.uid;
-				data.divs.showdiv.show();
-				data.divs.hidediv.hide();
+				data.divs.afterLogin.show();
+				data.divs.beforeLogin.hide();
 			}
 		});
 
@@ -261,8 +261,8 @@ function initialize(connection) {
 				}
 			},
 			divs: {
-				showdiv: $("#afterLogin"),
-				hidediv: $("#beforeLogin")
+				afterLogin: $("#afterLogin"),
+				beforeLogin: $("#beforeLogin")
 			}
 		});
 
