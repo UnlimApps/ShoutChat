@@ -19,7 +19,7 @@ var FirebaseConnection = {
 	//one to show after auth, and one to hide after auth
 	init: function(data) {
 
-		var firebase_app_name = "YOUR APP NAME HERE";
+		var firebase_app_name = "brilliant-inferno-1352";
 
 		this.ref = new Firebase("https://" + firebase_app_name + ".firebaseio.com/");
 
@@ -54,7 +54,7 @@ var FirebaseConnection = {
 		this.ref.child("messages").push(data);
 	},
 	googleAuth: function() {
-		this.ref.authWithOAuthPopup("google", function(error, authData) {
+		this.ref.authWithOAuthRedirect("google", function(error, authData) {
 			if (error) {
 				console.log("Login Failed!", error);
 			}
